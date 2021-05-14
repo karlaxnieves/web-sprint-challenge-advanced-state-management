@@ -1,12 +1,15 @@
 import axios from 'axios';
 
-export const FETCH_SMURFS = "FETCH_SMURFS";
+export const FETCH_START = "FETCH_START";
 export const FETCH_SUCCESS = "FETCH_SUCCESS";
 export const FETCH_FAIL = "FETCH_FAIL";
+export const ADD_SMURF = "ADD_SMURF";
+export const ADD_SMURF_SUCCESS = "ADD_SMURF_SUCCESS";
+export const ADD_SMURF_FAIL = "ADD_SMURF_FAIL";
 
-export const fetchPerson = () => {
+export const fetchSmurfs = () => {
     return (dispatch => {
-        dispatch({type: FETCH_SMURFS});
+        dispatch({type: FETCH_START});
 
         axios.get('http://localhost:3333/smurfs')
           .then(resp=> {
@@ -19,8 +22,22 @@ export const fetchPerson = () => {
     });
 }
 
+export const addSmurfs = ({ name, age, height }) => {
+    return (dispatch => {
+        dispatch({type: ADD_SMURF});
 
-export const fetchSmurfs = ()=> {
+        axios.get('http://localhost:3333/smurfs', { name, age, height })
+          .then(resp=> {
+            console.log(resp.data);
+            dispatch({type: ADD_SMURF_SUCCESS, payload:resp.data});
+          })
+          .catch(err=>{
+            dispatch({type: ADD_SMURF_FAIL, payload:err});
+          });
+    });
+}
+
+export const fetchStart = ()=> {
     return({type: FETCH_START});
 }
 
@@ -30,6 +47,18 @@ export const fetchSuccess = (smurf)=> {
 
 export const fetchFail = (error)=> {
     return({type: FETCH_FAIL, payload: error})
+}
+
+export const addSmurf = ()=> {
+    return({type: ADD_SMURF});
+}
+
+export const addSmurfSuccess = (smurf)=> {
+    return({type: ADD_SMURF_SUCCESS, payload:smurf});
+}
+
+export const addSmurfFail = (error)=> {
+    return({type: ADD_SMURF_FAIL, payload: error})
 }
 
 //Task List:
