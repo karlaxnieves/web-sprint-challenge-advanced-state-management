@@ -25,7 +25,7 @@ const {error, fetchFail, addSmurf} = props;
         error();
     }
 
-    const errorMessage = "";
+    const errorMessage = "Name, position and nickname fields are required.";
 
     return(<section>
         <h2>Add Smurf</h2>
