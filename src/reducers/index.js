@@ -1,11 +1,53 @@
+import {FETCH_START, FETCH_SUCCESS, FETCH_FAIL, ADD_SMURF, ADD_SMURF_SUCCESS, ADD_SMURF_FAIL} from './../actions'
 
-export const initialState = {
+const initialState = {
+    smurfs: [],
+    isFetching: false,
+    error: ''
 }
 
-const reducer = ()=>{
+export const reducer = (state = initialState, action)=>{
+    switch (action.type) {
+        case(FETCH_START):
+          return({
+            ...state,
+            isFetching: true
+          })
+        case(FETCH_SUCCESS):
+          return({
+            ...state,
+            smurf: action.payload,
+            isFetching: false
+          })
+        case(FETCH_FAIL):
+          return({
+            ...state,
+            error: action.payload,
+            isFetching: false
+          });
+          case(ADD_SMURF):
+      return({
+        ...state,
+        isAdding: true
+      });
+    case (ADD_SMURF_SUCCESS):
+      return ({
+        ...state,
+        smurf: [...action.payload],
+        isAdding: false
+      });
+    case (ADD_SMURF_FAIL):
+      return ({
+        ...state,
+        error: action.payload,
+        isAdding: false
+      });
+        default:
+          return state;
+      }
 }
 
-export default reducer;
+
 
 //Task List:
 //1. Adds the following state values into the initialState:
